@@ -60,7 +60,7 @@
     
     if (object.length > maximumValue && maximumValue > 0)
         return [NSError re_validationErrorForDomain:@"com.REValidation.maximumLength", name, maximumValue];
-    g
+
     return nil;
 }
 
