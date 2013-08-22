@@ -75,7 +75,7 @@ for (NSError *error in errors)
 // Alternatively you can use REValidator instances
 //
 NSString *testString = @"";
-errors = [REValidation validateObject:testString name:@"Test string" validators:@[ [REPresenceValidator validator], [RELengthValidator validatorWithParameters:@{ @"min": @3, @"max": @10} ] ]];
+errors = [REValidation validateObject:testString name:@"Test string" validators:@[ [REPresenceValidator validator], [RELengthValidator validatorWithParameters:@{ @"min": @3, @"max": @10}] ]];
 
 for (NSError *error in errors)
     NSLog(@"Error: %@", error.localizedDescription);
