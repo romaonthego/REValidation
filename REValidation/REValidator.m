@@ -42,8 +42,7 @@
 
 + (instancetype)validator
 {
-    REValidator *validator = [[self alloc] init];
-    return validator;
+    return [[self alloc] init];
 }
 
 + (NSString *)name
