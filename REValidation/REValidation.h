@@ -32,7 +32,6 @@
 
 @interface REValidation : NSObject
 
-+ (instancetype)sharedObject;
 + (void)registerDefaultValidators;
 + (void)registerDefaultErrorMessages;
 + (void)registerValidator:(Class)validatorClass;
