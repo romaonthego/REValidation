@@ -81,6 +81,70 @@ for (NSError *error in errors)
     NSLog(@"Error: %@", error.localizedDescription);
 ```
 
+It's easy to implement a custom validator, you need to subclass from `REValidator` and implement three methods:
+
+```objective-c
++ (NSString *)name;
++ (NSDictionary *)parseParameterString:(NSString *)string;
++ (NSError *)validateObject:(NSString *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters;
+```
+
+For example:
+
+```objective-c
++ (NSString *)name
+{
+    return @"length";
+}
+
++ (NSDictionary *)parseParameterString:(NSString *)string
+{
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d+)" options:0 error:&error];
+    NSArray *matches = [regex matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+    NSMutableArray *results = [NSMutableArray array];
+    for (NSTextCheckingResult *matchResult in matches) {
+        NSString *match = [string substringWithRange:[matchResult range]];
+        [results addObject:match];
+    }
+    if (results.count == 2) {
+        return @{ @"min": results[0], @"max": results[1]};
+    }
+
+    return nil;
+}
+
++ (NSError *)validateObject:(NSString *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters
+{
+    NSUInteger minimumValue = [parameters[@"min"] integerValue];
+    NSUInteger maximumValue = [parameters[@"max"] integerValue];
+
+    if (object.length < minimumValue && minimumValue > 0)
+        return [NSError re_validationErrorForDomain:@"com.REValidation.minimumLength", name, minimumValue];
+
+    if (object.length > maximumValue && maximumValue > 0)
+        return [NSError re_validationErrorForDomain:@"com.REValidation.maximumLength", name, maximumValue];
+
+    return nil;
+}
+```
+
+It's possible to add validations without subclassing `REValidator` class using inline validations:
+
+```objective-c
+REValidator *nameValidator = [REValidator validator];
+nameValidator.inlineValidation = ^NSError *(NSString *string, NSString *name) {
+    if ([string componentsSeparatedByString:@" "].count < 2) {
+        return [NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey: @"Please enter first and last name."}];
+    }
+    return nil;
+};
+
+_nameItem = [RETextItem itemWithTitle:@"" value:self.contact.name placeholder:@"First & Last Name"];
+_nameItem.autocapitalizationType = UITextAutocapitalizationTypeWords;
+_nameItem.validators = @[nameValidator];
+```
+
 ## Contact
 
 Roman Efimov
