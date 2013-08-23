@@ -117,7 +117,12 @@
         if ([validator isKindOfClass:[NSString class]]) {
             error = [self validateObject:object name:name validatorString:(NSString *)validator];
         } else {
-            error = [self validateObject:object name:name validator:validator];
+            REValidator *v = (REValidator *)validator;
+            if (v.inlineValidation) {
+                error = [[v class] validateObject:object variableName:name validation:v.inlineValidation];
+            } else {
+                error = [self validateObject:object name:name validator:validator];
+            }
         }
         if (error)
             [errors addObject:error];
