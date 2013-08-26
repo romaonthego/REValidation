@@ -129,7 +129,7 @@ For example:
 }
 ```
 
-It's possible to add validations without subclassing `REValidator` class using inline validations:
+It's possible to add validations without subclassing `REValidator` class using inline validations. Here's an example that shows how to use inline validations with [RETableViewManager](https://github.com/romaonthego/RETableViewManager)
 
 ```objective-c
 REValidator *nameValidator = [REValidator validator];
