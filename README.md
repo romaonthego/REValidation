@@ -140,9 +140,9 @@ nameValidator.inlineValidation = ^NSError *(NSString *string, NSString *name) {
     return nil;
 };
 
-_nameItem = [RETextItem itemWithTitle:@"" value:self.contact.name placeholder:@"First & Last Name"];
-_nameItem.autocapitalizationType = UITextAutocapitalizationTypeWords;
-_nameItem.validators = @[nameValidator];
+RETextItem *nameItem = [RETextItem itemWithTitle:@"" value:self.contact.name placeholder:@"First & Last Name"];
+nameItem.autocapitalizationType = UITextAutocapitalizationTypeWords;
+nameItem.validators = @[nameValidator];
 ```
 
 ## Contact
