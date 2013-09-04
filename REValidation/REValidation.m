@@ -41,7 +41,7 @@
     dispatch_once(&onceToken, ^{
         _sharedClient = [[REValidation alloc] init];
     });
-    
+
     return _sharedClient;
 }
 
@@ -52,19 +52,18 @@
 
 + (void)registerDefaultValidators
 {
-    static BOOL registeredValidators;
-    if (!registeredValidators) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         [REValidation registerValidator:[REPresenceValidator class]];
         [REValidation registerValidator:[RELengthValidator class]];
         [REValidation registerValidator:[REEmailValidator class]];
-        registeredValidators = YES;
-    }
+    });
 }
 
 + (void)registerDefaultErrorMessages
 {
-    static BOOL registeredMessages;
-    if (!registeredMessages) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         NSDictionary *messages = @{
                                    @"com.REValidation.presence": @"%@ can't be blank.",
                                    @"com.REValidation.minimumLength": @"%@ is too short (minimum is %i characters).",
@@ -72,8 +71,7 @@
                                    @"com.REValidation.email": @"%@ is not a valid email.",
                                    };
         [REValidation sharedObject].errorMessages = [NSMutableDictionary dictionaryWithDictionary:messages];
-        registeredMessages = YES;
-    }
+    });
 }
 
 + (NSString *)errorMessageForDomain:(NSString *)domain
@@ -111,7 +109,7 @@
 + (NSArray *)validateObject:(NSObject *)object name:(NSString *)name validators:(NSArray *)validators
 {
     NSMutableArray *errors = [NSMutableArray array];
-    
+
     for (id validator in validators) {
         NSError *error;
         if ([validator isKindOfClass:[NSString class]]) {
@@ -127,7 +125,7 @@
         if (error)
             [errors addObject:error];
     }
-    
+
     return errors;
 }
 
@@ -137,9 +135,9 @@
     self = [super init];
     if (!self)
         return nil;
-    
+
     self.registeredValidators = [[NSMutableDictionary alloc] init];
-    
+
     return self;
 }
 
