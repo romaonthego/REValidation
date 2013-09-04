@@ -39,7 +39,7 @@ $ edit Podfile
 Edit your Podfile and add REValidation:
 
 ``` bash
-pod 'REValidation', '~> 0.1.0'
+pod 'REValidation', '~> 0.1.1'
 ```
 
 Install into your Xcode project:
@@ -129,7 +129,7 @@ For example:
 }
 ```
 
-It's possible to add validations without subclassing `REValidator` class using inline validations:
+It's possible to add validations without subclassing `REValidator` class using inline validations. Here's an example that shows how to use inline validations with [RETableViewManager](https://github.com/romaonthego/RETableViewManager):
 
 ```objective-c
 REValidator *nameValidator = [REValidator validator];
@@ -140,9 +140,9 @@ nameValidator.inlineValidation = ^NSError *(NSString *string, NSString *name) {
     return nil;
 };
 
-_nameItem = [RETextItem itemWithTitle:@"" value:self.contact.name placeholder:@"First & Last Name"];
-_nameItem.autocapitalizationType = UITextAutocapitalizationTypeWords;
-_nameItem.validators = @[nameValidator];
+RETextItem *nameItem = [RETextItem itemWithTitle:@"" value:self.contact.name placeholder:@"First & Last Name"];
+nameItem.autocapitalizationType = UITextAutocapitalizationTypeWords;
+nameItem.validators = @[nameValidator];
 ```
 
 ## Contact
