@@ -57,6 +57,7 @@
         [REValidation registerValidator:[REPresenceValidator class]];
         [REValidation registerValidator:[RELengthValidator class]];
         [REValidation registerValidator:[REEmailValidator class]];
+        [REValidation registerValidator:[REURLValidator class]];
     });
 }
 
@@ -69,6 +70,7 @@
                                    @"com.REValidation.minimumLength": @"%@ is too short (minimum is %i characters).",
                                    @"com.REValidation.maximumLength": @"%@ is too long (maximum is %i characters).",
                                    @"com.REValidation.email": @"%@ is not a valid email.",
+                                   @"com.REValidation.url": @"%@ is not a valid url."
                                    };
         [REValidation sharedObject].errorMessages = [NSMutableDictionary dictionaryWithDictionary:messages];
     });
