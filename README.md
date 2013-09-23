@@ -86,7 +86,7 @@ It's easy to implement a custom validator, you need to subclass from `REValidato
 ```objective-c
 + (NSString *)name;
 + (NSDictionary *)parseParameterString:(NSString *)string;
-+ (NSError *)validateObject:(NSString *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters;
++ (NSError *)validateObject:(NSObject *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters;
 ```
 
 For example:
