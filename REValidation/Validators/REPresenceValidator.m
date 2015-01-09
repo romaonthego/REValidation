@@ -33,12 +33,15 @@
     return @"presence";
 }
 
-+ (NSError *)validateObject:(NSString *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters
++ (NSError *)validateObject:(NSObject *)object variableName:(NSString *)name parameters:(NSDictionary *)parameters
 {
     if (!object)
         return [NSError re_validationErrorForDomain:@"com.REValidation.presence", name];
     
-    if ([object isKindOfClass:[NSString class]] && object.length == 0)
+    if ([object isKindOfClass:[NSString class]] && [(NSString *)object length] == 0)
+        return [NSError re_validationErrorForDomain:@"com.REValidation.presence", name];
+    
+    if ([object isKindOfClass:[NSArray class]] && [(NSArray *)object count] == 0)
         return [NSError re_validationErrorForDomain:@"com.REValidation.presence", name];
     
     return nil;
